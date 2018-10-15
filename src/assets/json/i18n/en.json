@@ -1,0 +1,20 @@
+{
+    "data__sitename": "Crlp Jammen",
+    "data__main_quote": "Where words fail, music speaks",
+
+	"action__prev": "Back",
+    "action__add": "Add",
+    "action__remove": "Remove",
+    "action__login": "Log in",
+    "action__reset_password": "Reset password",
+
+	"validator__requiredfield_email": "The email is required",
+    "validator__validemail": "Invalid email",
+    "validator__requiredfield_password": "Password is required",
+    "validator__validpassword": "Invalid password",
+
+    "email": "Email",
+    "password": "Password",
+    "home": "Home",
+    "upload": "Upload"
+}
