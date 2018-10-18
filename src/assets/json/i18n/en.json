@@ -16,5 +16,6 @@
     "email": "Email",
     "password": "Password",
     "home": "Home",
-    "upload": "Upload"
+    "upload": "Upload",
+    "chat": "Chat"
 }

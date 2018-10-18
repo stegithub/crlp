@@ -17,7 +17,8 @@ import {
     MdIcon,
     MdApp,
     MdList,
-    MdDrawer
+    MdDrawer,
+    MdMenu
 } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -46,6 +47,7 @@ Vue.use(MdIcon)
 Vue.use(MdApp)
 Vue.use(MdList)
 Vue.use(MdDrawer)
+Vue.use(MdMenu)
 /************** end vue-material */
 
 /******************** i18n */ 

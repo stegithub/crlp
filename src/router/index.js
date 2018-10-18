@@ -43,6 +43,12 @@ const router = new Router({
 					name: 'upload',
 					component: () =>
 						import('../views/admin/pages/Upload')
+                },
+                {
+					path: '/admin/chat',
+					name: 'chat',
+					component: () =>
+						import('../views/admin/pages/Chat')
 				}
 			]
 		}

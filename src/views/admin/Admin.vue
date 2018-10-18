@@ -9,6 +9,13 @@
                     </md-button>
                 </div>
                 <div class="md-toolbar-section-end">
+                    <div v-if="artists.length > 0" class="md-layout-item">
+                        <md-field>
+                            <md-select v-model="artist" placeholder="Band">
+                                <md-option v-for="a of artists" :key="a.id" :value="a.id">{{a.name}}</md-option>
+                            </md-select>
+                        </md-field>
+                    </div>
                     <md-button class="md-icon-button">
                         <md-icon>refresh</md-icon>
                     </md-button>
@@ -20,7 +27,6 @@
         </md-app-toolbar>
         <md-app-drawer :md-active.sync="menuVisible">
             <md-toolbar class="md-transparent" md-elevation="0">Navigation</md-toolbar>
-
             <md-list>
                 <md-list-item>
                     <md-button @click="$router.push('/admin/home'); menuVisible = !menuVisible" class="md-icon-button">
@@ -33,6 +39,12 @@
                         <md-icon>move_to_inbox</md-icon>
                     </md-button>
                     <span class="md-list-item-text">{{$t('upload')}}</span>
+                </md-list-item>
+                <md-list-item>
+                    <md-button @click="$router.push({name: 'chat', params: {artist: artist}}); menuVisible = !menuVisible" class="md-icon-button">
+                        <md-icon>chat</md-icon>
+                    </md-button>
+                    <span class="md-list-item-text">{{$t('chat')}}</span>
                 </md-list-item>
 
                 <md-list-item>
@@ -59,10 +71,20 @@
 </template>
 
 <script>
+
+import { artistsRef } from '../../firebase_config'
+
 export default {
     name: 'admin',
+    firestore () {
+        return {
+            artists: artistsRef.where('users', 'array-contains', this.$current_user.uid),
+        }
+    },
     data: () => ({
-		menuVisible: false
+        menuVisible: false,
+        artists: [],
+        artist: ''
 	}),
 	components: {
 		
