@@ -1,9 +1,51 @@
 <template>
     <div class="upload">
-        <input v-on:change="getImage" type="file" id="file" class="inputfile">
-        <label for="file">Escoje un archivo</label>
-        <button v-on:click="uploadImage">Subir</button>
-        {{this.progress}}
+        <md-field>
+            <label>Upload</label>
+            <md-file id="file" v-model="multiple" multiple v-on:md-change="getFiles" />
+        </md-field>
+        <md-button @click="upload()" class="md-icon-button">
+            <md-icon>cloud_upload</md-icon>
+        </md-button>
+
+        <div v-for="(task, index) of tasks" v-if="task.progress < 100" :key="index">
+            {{task.name}}
+            <md-progress-bar class="md-accent" md-mode="determinate" :md-value="task.progress"></md-progress-bar>
+        </div>
+        <!-- {{this.progress}} -->
+
+        <div>
+            <md-table v-model="medias" md-card @md-selected="onSelect">
+            <!-- <md-table-toolbar>
+                <h1 class="md-title">With auto select and alternate headers</h1>
+            </md-table-toolbar> -->
+
+            <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
+                <div class="md-toolbar-section-start"></div>
+
+                <div class="md-toolbar-section-end">
+                <md-button class="md-icon-button">
+                    <md-icon>delete</md-icon>
+                </md-button>
+                </div>
+            </md-table-toolbar>
+
+            <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
+                <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+                <md-table-cell md-label="Type" md-sort-by="type">{{ item.type }}</md-table-cell>
+                <!-- <md-table-cell md-label="Created" md-sort-by="title">{{ item.created }}</md-table-cell> -->
+                <md-table-cell md-label="" md-sort-by="url">
+                    <md-button @click="download(item.url, item.name)" class="md-icon-button">
+                        <md-icon>cloud_download</md-icon>
+                    </md-button>
+                </md-table-cell>
+            </md-table-row>
+            </md-table>
+
+            <!-- <p>Selected:</p>
+            {{ selected }} -->
+        </div>
+        
     </div>
 </template>
 
@@ -14,83 +56,118 @@ export default {
     name: 'upload',
     firestore() {
         return {
-            medias: mediaRef.doc(this.$route.params.id),
-            // components: componentsRef
+            medias: mediaRef.where("artist", "==", this.$route.params.artistRef)
         }
 	},
 	data: () => ({
-		progress: 0
+        progress: 0,
+        medias: [],
+        selected: [],
+        multiple: null,
+        current_files_uploaded: [],
+        tasks: []
 	}),
-	created() {},
+	created() {
+
+    },
 	methods: {
+        onSelect (items) {
+            this.selected = items
+        },
+        download(url, name) {
+            // window.open(url)
+            let xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = (event) => {
+                let blob = xhr.response;
+                let a = document.createElement("a");
+                a.href = window.URL.createObjectURL(blob);
+                a.download = name
+                a.click();
+                a.remove();
+            };
+            xhr.open('GET', url);
+            xhr.send();
+        },
 		getImage(e) {
 			this.image = e.target.files[0]
-		},
+        },
+        getFiles(e) {
+            this.current_files_uploaded = e
+        },
+        upload() {
+            this.tasks = []
+            for(let i = 0; i < this.current_files_uploaded.length; i++) {
+                this.tasks.push({
+                    name: this.current_files_uploaded[i].name,
+                    progress: 0
+                })
 
-		uploadNewUrl(url) {
-			this.$firebaseRefs.photos.push({
-				url: url
-			});
-			// toastr.success('Done!');
-		},
+                let uploadTask = storage
+                    .ref()
+                    .child(this.medias[0].artist.name + '/' + this.current_files_uploaded[i].name)
+                    .put(this.current_files_uploaded[i], {contentType: this.current_files_uploaded[i].type})
+                
+                uploadTask.on(
+                    firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                    snapshot => {
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        this.tasks[i].progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                        // toastr.info('Upload is ' + progress + '% done');
+                        switch (snapshot.state) {
+                            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                console.log('Upload is paused')
+                                break
+                            case firebase.storage.TaskState.RUNNING: // or 'running'
+                                console.log('Upload is running')
+                                break
+                        }
+                    },
+                    error => {
+                        switch (error.code) {
+                            case 'storage/unauthorized':
+                                alert(
+                                    "User doesn't have permission to access the object"
+                                )
+                                break
 
-		uploadImage() {
-			var metadata = {
-				contentType: 'audio/mpeg'
-			}
+                            case 'storage/canceled':
+                                alert('User canceled the upload')
+                                break
 
-			var uploadTask = storage
-				.ref()
-				.child(this.image.name)
-				.put(this.image, metadata)
-
-			// Listen for state changes, errors, and completion of the upload.
-			uploadTask.on(
-				firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-				snapshot => {
-					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-					this.progress =
-						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-					// toastr.info('Upload is ' + progress + '% done');
-					switch (snapshot.state) {
-						case firebase.storage.TaskState.PAUSED: // or 'paused'
-							console.log('Upload is paused')
-							break
-						case firebase.storage.TaskState.RUNNING: // or 'running'
-							console.log('Upload is running')
-							break
-					}
-				},
-				error => {
-					switch (error.code) {
-						case 'storage/unauthorized':
-							alert(
-								"User doesn't have permission to access the object"
-							)
-							break
-
-						case 'storage/canceled':
-							alert('User canceled the upload')
-							break
-
-						case 'storage/unknown':
-							alert(
-								'Unknown error occurred, inspect error.serverResponse'
-							)
-							break
-					}
-				},
-				() => {
-					// Upload completed successfully, now we can get the download URL
-					uploadTask.snapshot.ref
-						.getDownloadURL()
-						.then((downloadURL) => {
-							this.uploadNewUrl(downloadURL)
-						})
-				}
-			)
-		}
-	}
+                            case 'storage/unknown':
+                                alert(
+                                    'Unknown error occurred, inspect error.serverResponse'
+                                )
+                                break
+                        }
+                    },
+                    () => {
+                        // Upload completed successfully, now we can get the download URL
+                        uploadTask.snapshot.ref
+                            .getDownloadURL()
+                            .then((downloadURL) => {
+                                mediaRef.add({
+                                    artist: this.$route.params.artistRef,
+                                    created: firebase.firestore.FieldValue.serverTimestamp(),
+                                    name: uploadTask.snapshot.metadata.name,
+                                    path: 'gs://' + uploadTask.snapshot.metadata.bucket + '/' + uploadTask.snapshot.metadata.fullPath,
+                                    permission_level: 0,
+                                    type: uploadTask.snapshot.metadata.contentType,
+                                    updated: firebase.firestore.FieldValue.serverTimestamp(),
+                                    updated_by: this.$current_user.uid,
+                                    url: downloadURL
+                                });
+                            })
+                    }
+                )
+            }
+        }
+    },
+    components: {
+        
+    }
 }
 </script>
 

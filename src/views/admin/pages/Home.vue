@@ -1,6 +1,6 @@
 <template>
   <div class="admin-home">
-    <aplayer :audio="audio" :lrc-type="3" />
+    <aplayer :audio="audio" :autoplay="autoplay" />
   </div>
 </template>
 
@@ -10,6 +10,7 @@ import { storage } from '../../../firebase_config'
 export default {
     name: 'home',
 	data: () => ({
+        autoplay: false,
 		audio: {
 			name: 'Epic Jam',
 			artist: 'Crlp Jammen',
@@ -30,21 +31,21 @@ export default {
 			.catch((error) => {
 				console.log(error)
             })
-        storage
-            .refFromURL('gs://crlpapp-9ec26.appspot.com/3-EPIC JAM.wav')
-			.getDownloadURL()
-			.then((url) => {
-				this.audio.url = url
-			})
-			.catch((error) => {
-				console.log(error)
-            })
+        // storage
+        //     .refFromURL('gs://crlpapp-9ec26.appspot.com/3-EPIC JAM.wav')
+		// 	.getDownloadURL()
+		// 	.then((url) => {
+		// 		this.audio.url = url
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log(error)
+        //     })
     }
 }
 </script>
 
 <style lang="scss">
-.aplayer-lrc-current {
-	display: none;
-}
+// .aplayer-lrc-current {
+// 	display: none;
+// }
 </style>

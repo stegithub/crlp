@@ -11,7 +11,7 @@
                 <div class="md-toolbar-section-end">
                     <div v-if="artists.length > 0" class="md-layout-item">
                         <md-field>
-                            <md-select v-model="artist" placeholder="Band">
+                            <md-select v-model="artist_id" placeholder="Band">
                                 <md-option v-for="a of artists" :key="a.id" :value="a.id">{{a.name}}</md-option>
                             </md-select>
                         </md-field>
@@ -35,13 +35,13 @@
                     <span class="md-list-item-text">{{$t('home')}}</span>
                 </md-list-item>
                 <md-list-item>
-                    <md-button @click="$router.push('/admin/upload'); menuVisible = !menuVisible" class="md-icon-button">
-                        <md-icon>move_to_inbox</md-icon>
+                    <md-button @click="$router.push({name: 'upload', params: {artistRef: artistRef}}); menuVisible = !menuVisible" class="md-icon-button">
+                        <md-icon>cloud_upload</md-icon>
                     </md-button>
                     <span class="md-list-item-text">{{$t('upload')}}</span>
                 </md-list-item>
                 <md-list-item>
-                    <md-button @click="$router.push({name: 'chat', params: {artist: artist}}); menuVisible = !menuVisible" class="md-icon-button">
+                    <md-button @click="$router.push({name: 'chat', params: {artistRef: artistRef}}); menuVisible = !menuVisible" class="md-icon-button">
                         <md-icon>chat</md-icon>
                     </md-button>
                     <span class="md-list-item-text">{{$t('chat')}}</span>
@@ -84,8 +84,21 @@ export default {
     data: () => ({
         menuVisible: false,
         artists: [],
-        artist: ''
-	}),
+        artist_id: '',
+        artistRef: {}
+    }),
+    created() {
+    },
+    watch: {
+        artists(new_value) {
+            if(new_value.length > 0) {
+                this.artist_id = new_value[0].id
+            }
+        },
+        artist_id(new_value) {
+            this.artistRef = artistsRef.doc(new_value)
+        }
+    },
 	components: {
 		
 	}

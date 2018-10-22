@@ -18,7 +18,10 @@ import {
     MdApp,
     MdList,
     MdDrawer,
-    MdMenu
+    MdMenu,
+    MdTable,
+    MdRipple,
+    MdCheckbox
 } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -48,6 +51,9 @@ Vue.use(MdApp)
 Vue.use(MdList)
 Vue.use(MdDrawer)
 Vue.use(MdMenu)
+Vue.use(MdTable)
+Vue.use(MdRipple)
+Vue.use(MdCheckbox)
 /************** end vue-material */
 
 /******************** i18n */ 
