@@ -21,10 +21,14 @@ import {
     MdMenu,
     MdTable,
     MdRipple,
-    MdCheckbox
+    MdCheckbox,
+    MdTooltip
 } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+
+import Notifications from './views/admin/components/Notification'
+Vue.use(Notifications)
 
 import VueAPlayer from '@moefe/vue-aplayer'
 Vue.use(VueAPlayer, {
@@ -54,6 +58,7 @@ Vue.use(MdMenu)
 Vue.use(MdTable)
 Vue.use(MdRipple)
 Vue.use(MdCheckbox)
+Vue.use(MdTooltip)
 /************** end vue-material */
 
 /******************** i18n */ 

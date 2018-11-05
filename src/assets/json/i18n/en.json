@@ -17,5 +17,12 @@
     "password": "Password",
     "home": "Home",
     "upload": "Upload",
-    "chat": "Chat"
+    "chat": "Chat",
+    "media": "Media",
+
+    "file_deleted": "File deleted",
+    "delete_error": "Error during delete",
+    "unauthorized": "Unauthorized",
+    "upload_canceled": "Upload canceled",
+    "upload_success": "Upload success"
 }

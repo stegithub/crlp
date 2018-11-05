@@ -1,5 +1,6 @@
 <template>
   <div class="page-container">
+        <notifications></notifications>
         <md-app md-mode="reveal">
         <md-app-toolbar class="tbar md-primary">
             <div class="md-toolbar-row">
@@ -9,8 +10,8 @@
                     </md-button>
                 </div>
                 <div class="md-toolbar-section-end">
-                    <div v-if="artists.length > 0" class="md-layout-item">
-                        <md-field>
+                    <div v-if="artists.length > 0">
+                        <md-field class="select">
                             <md-select v-model="artist_id" placeholder="Band">
                                 <md-option v-for="a of artists" :key="a.id" :value="a.id">{{a.name}}</md-option>
                             </md-select>
@@ -119,6 +120,16 @@ export default {
 	.md-drawer {
 		width: 230px;
 		max-width: calc(100vw - 125px);
+    }
+
+    .md-select {
+        input {
+            -webkit-text-fill-color: var(--md-theme-default-text-primary-on-primary, #fff) !important;
+        }
+    }
+
+    .md-field.select:after {
+        background-color: var(--md-theme-default-text-primary-on-primary, #fff);
     }
 }
 </style>

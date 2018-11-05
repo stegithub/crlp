@@ -31,15 +31,15 @@ export default {
 			.catch((error) => {
 				console.log(error)
             })
-        // storage
-        //     .refFromURL('gs://crlpapp-9ec26.appspot.com/3-EPIC JAM.wav')
-		// 	.getDownloadURL()
-		// 	.then((url) => {
-		// 		this.audio.url = url
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log(error)
-        //     })
+        storage
+            .refFromURL('gs://crlpapp-9ec26.appspot.com/3-EPIC JAM.wav')
+			.getDownloadURL()
+			.then((url) => {
+				this.audio.url = url
+			})
+			.catch((error) => {
+				console.log(error)
+            })
     }
 }
 </script>
