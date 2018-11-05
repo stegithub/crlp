@@ -17,8 +17,8 @@
         },
         computed: {
             getPosition () {
-                if (this.message.sender === this.$current_user.uid) {
-                    return 'my message'
+                if (this.message.sender.user_id === this.$current_user.uid) {
+                    return 'my-message'
                 } else {
                     return 'message'
                 }
@@ -28,7 +28,7 @@
 </script>
 
 <style scoped>
-    .my.message {
+    .my-message {
         text-align: right;
     }
     .message-container {

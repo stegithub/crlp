@@ -12,5 +12,6 @@ let db = database
 let mediaRef = db.collection('media')
 let chatRef = db.collection('chat')
 let artistsRef = db.collection('artists')
+let usersRef = db.collection('users')
 
-export { /*pagesRef,*/ db, firebase_app, firebase, storage, mediaRef, chatRef, artistsRef }
+export { db, firebase_app, firebase, usersRef, storage, mediaRef, chatRef, artistsRef }

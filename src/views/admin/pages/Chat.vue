@@ -1,39 +1,52 @@
 <template>
     <div class="chat">
-        Conversation ID: {{ $route.params.artistRef.id }}
+        Artist: {{ this.artist.name }}
         <hr>
         <message v-for="(message, index) in messages" :message="message" :key="index"/>
+        <div class="md-layout md-alignment-bottom-right">
+            <md-button @click="addMessage()" class="md-icon-button">
+                <md-icon>send</md-icon>
+            </md-button>
+        </div>
         <md-field>
             <md-textarea v-model="text" v-on:keypress.enter.prevent="addMessage()"></md-textarea>
         </md-field>
-        <md-button @click="addMessage()" class="md-icon-button">
-            <md-icon>add_circle</md-icon>
-        </md-button>
     </div>
 </template>
 
 <script>
-import { chatRef, artistsRef, firebase } from '../../../firebase_config'
+import { chatRef, usersRef, artistsRef, firebase } from '../../../firebase_config'
 
 export default {
     name: 'chat',
     firestore() {
         return {
             messages: this.$route.params.artistRef.collection('messages').orderBy('created'),
+            artist: this.$route.params.artistRef,
+            currentUser: usersRef.where('user_id', '==', this.$current_user.uid)
         }
     },
 	data: () => ({
         messages: [],
-        text: ''
+        text: '',
+        artist: {},
+        currentUser: {},
+        currentUserRef: {}
 	}),
 	created() {
+
+    },
+    mounted() {
+        this.$firestoreRefs.currentUser.get().then(ref => {
+            this.currentUserRef = ref.docs[0].ref
+        })
     },
     methods: {
         addMessage() {
             if(this.text.length > 0) {
                 this.$route.params.artistRef.collection('messages').add({
                     created: firebase.firestore.FieldValue.serverTimestamp(),
-                    sender: this.$current_user.uid,
+                    sender: this.currentUserRef,
                     text: this.text
                 })
                 this.text = ''

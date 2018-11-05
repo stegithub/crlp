@@ -17,12 +17,12 @@
                             </md-select>
                         </md-field>
                     </div>
-                    <md-button class="md-icon-button">
+                    <!-- <md-button class="md-icon-button">
                         <md-icon>refresh</md-icon>
                     </md-button>
                     <md-button class="md-icon-button">
                         <md-icon>more_vert</md-icon>
-                    </md-button>
+                    </md-button> -->
                 </div>
             </div>
         </md-app-toolbar>
@@ -130,6 +130,10 @@ export default {
 
     .md-field.select:after {
         background-color: var(--md-theme-default-text-primary-on-primary, #fff);
+    }
+
+    .md-toolbar-row {
+        max-height: 48px;
     }
 }
 </style>
