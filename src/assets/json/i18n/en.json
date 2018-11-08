@@ -24,5 +24,6 @@
     "delete_error": "Error during delete",
     "unauthorized": "Unauthorized",
     "upload_canceled": "Upload canceled",
-    "upload_success": "Upload success"
+    "upload_success": "Upload success",
+    "artist": "Artist"
 }
