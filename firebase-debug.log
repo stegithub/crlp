@@ -1,0 +1,17 @@
+[debug] [2018-11-12T22:01:38.125Z] ----------------------------------------------------------------------
+[debug] [2018-11-12T22:01:38.127Z] Command:       /usr/local/Cellar/node/10.0.0/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-11-12T22:01:38.127Z] CLI Version:   4.2.1
+[debug] [2018-11-12T22:01:38.127Z] Platform:      darwin
+[debug] [2018-11-12T22:01:38.127Z] Node Version:  v10.0.0
+[debug] [2018-11-12T22:01:38.127Z] Time:          Mon Nov 12 2018 23:01:38 GMT+0100 (CET)
+[debug] [2018-11-12T22:01:38.127Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-11-12T22:01:38.142Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-11-12T22:01:38.142Z] > authorizing via signed-in user
+[debug] [2018-11-12T22:01:38.144Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-11-12T22:01:38.144Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-11-12T22:01:38.471Z] <<< HTTP RESPONSE 200
+[debug] [2018-11-12T22:01:38.488Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/crlpapp-9ec26  
+ 
+[debug] [2018-11-12T22:01:39.349Z] <<< HTTP RESPONSE 200

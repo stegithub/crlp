@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
-        <notifications></notifications>
-        <md-app md-mode="reveal">
+    <notifications></notifications>
+    <md-app md-mode="reveal">
         <md-app-toolbar class="tbar md-primary">
             <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">

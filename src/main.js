@@ -7,6 +7,7 @@ import VueFire from 'vuefire'
 import './registerServiceWorker'
 //************** vue-material */
 import {
+    MdAvatar,
 	MdButton,
 	MdContent,
 	MdCard,
@@ -59,6 +60,7 @@ Vue.use(MdTable)
 Vue.use(MdRipple)
 Vue.use(MdCheckbox)
 Vue.use(MdTooltip)
+Vue.use(MdAvatar)
 /************** end vue-material */
 
 /******************** i18n */ 

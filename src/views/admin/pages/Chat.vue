@@ -2,15 +2,31 @@
     <div class="chat">
         {{$t("message.artist")}}: {{ this.artist.name }}
         <hr>
-        <message v-for="(message, index) in messages" :message="message" :key="index" @messageChanged="messageChanged($event)"/>
-        <div class="md-layout md-alignment-bottom-right">
-            <md-button @click="addMessage()" class="md-icon-button">
-                <md-icon>send</md-icon>
-            </md-button>
-        </div>
-        <md-field>
-            <md-textarea v-model="text" v-on:keypress.enter.prevent="addMessage()"></md-textarea>
-        </md-field>
+        <md-content ref="messagesEl" class="md-scrollbar messages">
+            <message v-for="(message, index) in messages" :message="message" :key="index" @messageChanged="messageChanged($event)"/>
+        </md-content>
+
+        <md-card-actions>
+            <md-field>
+                <md-textarea v-model="text" v-on:keypress.enter.prevent="addMessage()"></md-textarea>
+            </md-field>
+            <div class="md-layout md-alignment-bottom-right">
+                <md-button @click="addMessage()" class="md-icon-button">
+                    <md-icon>send</md-icon>
+                </md-button>
+            </div>
+        </md-card-actions>
+        
+        <!-- <div>
+            <div class="md-layout md-alignment-bottom-right">
+                <md-button @click="addMessage()" class="md-icon-button">
+                    <md-icon>send</md-icon>
+                </md-button>
+            </div>
+            <md-field>
+                <md-textarea v-model="text" v-on:keypress.enter.prevent="addMessage()"></md-textarea>
+            </md-field>
+        </div> -->
     </div>
 </template>
 
@@ -32,17 +48,17 @@ export default {
         artist: {},
         currentUser: {}
 	}),
-	created() {
-
-    },
-    mounted() {
-        this.$firestoreRefs.currentUser
+    updated() {
+        this.$nextTick(() => {
+            this.$refs.messagesEl.$el.scrollTop = this.$refs.messagesEl.$el.scrollHeight            
+        })
     },
     methods: {
         addMessage() {
             if(this.text.length > 0) {
                 this.$route.params.artistRef.collection('messages').add({
                     created: firebase.firestore.FieldValue.serverTimestamp(),
+                    updated: firebase.firestore.FieldValue.serverTimestamp(),
                     sender: this.$firestoreRefs.currentUser,
                     text: this.text
                 }).catch(e => {
@@ -77,5 +93,11 @@ export default {
 
 <style lang="scss">
 .chat {
+    // max-height: calc(100vh - 8vh);
+    .messages {
+        height: 55vh;
+        // max-height: calc(100vh - 34vh);
+        overflow: auto;
+    }
 }
 </style>
