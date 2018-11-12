@@ -20,3 +20,6 @@ yarn-error.log*
 *.sln
 *.sw*
 .firebase
+src/firebase_config/config.js
+firebase-debug.log
+firestore.rules
