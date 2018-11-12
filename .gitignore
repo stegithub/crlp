@@ -23,3 +23,4 @@ yarn-error.log*
 src/firebase_config/config.js
 firebase-debug.log
 firestore.rules
+firestore.indexes.json
