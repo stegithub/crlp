@@ -30,25 +30,25 @@
             <md-toolbar class="md-transparent" md-elevation="0">Navigation</md-toolbar>
             <md-list>
                 <md-list-item>
-                    <md-button @click="$router.push('/admin/home'); menuVisible = !menuVisible" class="md-icon-button">
+                    <md-button @click="$router.push({name: 'home'}); menuVisible = !menuVisible" class="md-icon-button">
                         <md-icon>home</md-icon>
                     </md-button>
-                    <span class="md-list-item-text">{{$t('home')}}</span>
+                    <span class="md-list-item-text">{{$t('message.home')}}</span>
                 </md-list-item>
-                <md-list-item>
+                <md-list-item v-if="this.user && this.user.isAdmin">
                     <md-button @click="$router.push({name: 'upload', params: {artistRef: artistRef}}); menuVisible = !menuVisible" class="md-icon-button">
                         <md-icon>cloud_upload</md-icon>
                     </md-button>
-                    <span class="md-list-item-text">{{$t('upload')}}</span>
+                    <span class="md-list-item-text">{{$t('message.upload')}}</span>
                 </md-list-item>
                 <md-list-item>
                     <md-button @click="$router.push({name: 'chat', params: {artistRef: artistRef}}); menuVisible = !menuVisible" class="md-icon-button">
                         <md-icon>chat</md-icon>
                     </md-button>
-                    <span class="md-list-item-text">{{$t('chat')}}</span>
+                    <span class="md-list-item-text">{{$t('message.chat')}}</span>
                 </md-list-item>
 
-                <md-list-item>
+                <!-- <md-list-item>
                     <md-icon>send</md-icon>
                     <span class="md-list-item-text">Sent Mail</span>
                 </md-list-item>
@@ -61,11 +61,11 @@
                 <md-list-item>
                     <md-icon>error</md-icon>
                     <span class="md-list-item-text">Spam</span>
-                </md-list-item>
+                </md-list-item> -->
             </md-list>
         </md-app-drawer>
         <md-app-content>
-            <router-view/>
+            <router-view v-if="artistRef" :artistRef="artistRef" />
         </md-app-content>
     </md-app>
   </div>
@@ -73,20 +73,22 @@
 
 <script>
 
-import { artistsRef } from '../../firebase_config'
+import { artistsRef, usersRef } from '../../firebase_config'
 
 export default {
     name: 'admin',
     firestore () {
         return {
             artists: artistsRef.where('users', 'array-contains', this.$current_user.uid),
+            user: usersRef.doc(this.$current_user.uid),
         }
     },
     data: () => ({
         menuVisible: false,
         artists: [],
         artist_id: '',
-        artistRef: {}
+        artistRef: null,
+        user: null
     }),
     created() {
     },
