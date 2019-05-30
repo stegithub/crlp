@@ -25,5 +25,7 @@
     "unauthorized": "Unauthorized",
     "upload_canceled": "Upload canceled",
     "upload_success": "Upload success",
-    "artist": "Artist"
+    "artist": "Artist",
+    "name": "Nome",
+    "type": "Tipo"
 }

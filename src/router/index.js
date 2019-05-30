@@ -11,7 +11,7 @@ const router = new Router({
 	routes: [
 		{
             path: "/",
-            name: "home",
+            name: "",
             // component: Home
 			redirect: '/admin/home',
 			component: () => import('../views/admin/Admin')            

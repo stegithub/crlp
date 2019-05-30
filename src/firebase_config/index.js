@@ -2,16 +2,25 @@
 import firebase from 'firebase'
 import config from './config'
 
-let firebase_app = firebase.initializeApp(config)
+var storage, mediaRef, chatRef, artistsRef, usersRef
 
-let storage = firebase_app.storage();
+function firebaseInit() {
+    let firebase_app = firebase.initializeApp(config)
 
-let database = firebase_app.firestore()
-database.settings({ timestampsInSnapshots: true })
-let db = database
-let mediaRef = db.collection('media')
-let chatRef = db.collection('chat')
-let artistsRef = db.collection('artists')
-let usersRef = db.collection('users')
+     storage = firebase_app.storage();
 
-export { db, firebase_app, firebase, usersRef, storage, mediaRef, chatRef, artistsRef }
+    let database = firebase_app.firestore()
+    database.settings({ timestampsInSnapshots: true })
+    let db = database
+     mediaRef = db.collection('media')
+     chatRef = db.collection('chat')
+     artistsRef = db.collection('artists')
+     usersRef = db.collection('users')
+    return firebase_app
+}
+
+export { firebaseInit, firebase, storage,
+    mediaRef,
+    chatRef,
+    artistsRef,
+    usersRef }

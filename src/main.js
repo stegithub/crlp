@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/'
-import { firebase_app, firebase } from './firebase_config'
+import store from './store/'
+import { firebase } from './firebase_config'
 
 import VueFire from 'vuefire'
 import './registerServiceWorker'
@@ -74,6 +75,10 @@ import '@quasar/extras/material-icons/material-icons.css'
 import {
   Quasar, 
   QLayout,
+  QBtnGroup,
+  QInput,
+  QUploaderAddTrigger,
+  QUploader,
   QHeader,
   QDrawer,
   QPageContainer,
@@ -92,6 +97,11 @@ Vue.use(Quasar, {
   config: {},
   components: {
     QLayout,
+    QBtnGroup,
+    QUploaderAddTrigger,
+    QUploader,
+    QBtn,
+    QInput,
     QHeader,
     QDrawer,
     QPageContainer,
@@ -123,28 +133,28 @@ Vue.config.productionTip = false
 
 Vue.use(VueFire)
 
-firebase_app.auth().onAuthStateChanged((user) => {
-    // console.log(user)
-    if(!Vue.prototype.$current_user && user) {
-        Vue.prototype.$current_user = user
-        router.replace('admin')
-    }
+// firebase_app.auth().onAuthStateChanged((user) => {
+//     // console.log(user)
+//     if(!Vue.prototype.$current_user && user) {
+//         Vue.prototype.$current_user = user
+//         router.replace('admin')
+//     }
     
-	// if (user) {
-	// 	// User is signed in.
-	// 	var displayName = user.displayName
-	// 	var email = user.email
-	// 	var emailVerified = user.emailVerified
-	// 	var photoURL = user.photoURL
-	// 	var isAnonymous = user.isAnonymous
-	// 	var uid = user.uid
-	// 	var providerData = user.providerData
-	// 	// ...
-	// } else {
-	// 	// User is signed out.
-	// 	// ...
-	// }
-})
+// 	// if (user) {
+// 	// 	// User is signed in.
+// 	// 	var displayName = user.displayName
+// 	// 	var email = user.email
+// 	// 	var emailVerified = user.emailVerified
+// 	// 	var photoURL = user.photoURL
+// 	// 	var isAnonymous = user.isAnonymous
+// 	// 	var uid = user.uid
+// 	// 	var providerData = user.providerData
+// 	// 	// ...
+// 	// } else {
+// 	// 	// User is signed out.
+// 	// 	// ...
+// 	// }
+// })
 
 /**
  * NOTIFICATIONS REQUEST
@@ -202,6 +212,7 @@ messaging.onMessage(function(payload) {
 
 new Vue({
     router,
+    store,
     i18n,    
 	render: h => h(App)
 }).$mount('#app')

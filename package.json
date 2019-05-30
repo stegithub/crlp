@@ -12,7 +12,7 @@
     "@quasar/extras": "^1.0.0",
     "firebase": "^5.5.4",
     "material-design-icons-iconfont": "^3.0.3",
-    "quasar": "^1.0.0-beta.1",
+    "quasar": "^1.0.0-rc.4",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
     "vue-i18n": "^8.2.0",
