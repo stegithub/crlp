@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import { firebase_app } from '../firebase_config'
-import NoConnection from "../views/NoConnection.vue";
+import NoConnection from "../views/NoConnection.vue"
 
 Vue.use(Router)
 
@@ -35,8 +35,7 @@ const router = new Router({
 				{
 					path: '/admin/home',
 					name: 'home',
-					component: () =>
-						import('../views/admin/pages/Home')
+					component: () => import('../views/admin/pages/Home')
                 },
                 {
 					path: '/admin/upload',

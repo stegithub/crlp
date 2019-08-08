@@ -42,7 +42,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, email, minLength } from 'vuelidate/lib/validators'
-import { firebase_app } from '../../firebase_config'
+import { firebaseApp } from '../../firebase_config'
 
 export default {
 	name: 'login',
@@ -82,7 +82,7 @@ export default {
 			this.sending = true
 			this.error = false
 			this.error_message = ''
-			firebase_app
+			firebaseApp
 				.auth()
 				.signInWithEmailAndPassword(this.form.email, this.form.password)
 				.then(r => {
@@ -103,7 +103,7 @@ export default {
 				this.error = true
 				this.error_message = 'Please enter email'
 			}
-			firebase_app
+			firebaseApp
 				.auth()
 				.sendPasswordResetEmail(this.form.email)
 				.then(function() {

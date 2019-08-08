@@ -2,7 +2,7 @@
 import firebase from 'firebase'
 import config from './config'
 
-var storage, mediaRef, chatRef, artistsRef, usersRef
+var storage, mediaRef, chatRef, artistsRef, usersRef, firebaseApp
 
 function firebaseInit() {
     let firebase_app = firebase.initializeApp(config)
@@ -16,10 +16,11 @@ function firebaseInit() {
      chatRef = db.collection('chat')
      artistsRef = db.collection('artists')
      usersRef = db.collection('users')
+     firebaseApp = firebase_app
     return firebase_app
 }
 
-export { firebaseInit, firebase, storage,
+export { firebaseInit, firebase, storage, firebaseApp,
     mediaRef,
     chatRef,
     artistsRef,

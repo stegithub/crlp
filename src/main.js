@@ -6,6 +6,54 @@ import { firebase } from './firebase_config'
 
 import VueFire from 'vuefire'
 import './registerServiceWorker'
+
+
+import './styles/quasar.styl'
+import {
+  Quasar, 
+  QLayout,
+  QHeader,
+  QDrawer,
+  QAvatar,
+  QPageContainer,
+  QFooter,
+  QPage,
+  QToolbar,
+  QToolbarTitle,
+  QBtn,
+  QIcon,
+  QList,
+  QItem,
+  QItemSection,
+  QItemLabel,
+} from 'quasar'
+
+Vue.use(Quasar, {
+  config: {},
+  components: {
+    QLayout,
+    QHeader,
+    QAvatar,
+    QFooter,
+    QDrawer,
+    QPageContainer,
+    QPage,
+    QToolbar,
+    QToolbarTitle,
+    QBtn,
+    QIcon,
+    QList,
+    QItem,
+    QItemSection,
+    QItemLabel,
+  },
+  directives: {
+  },
+  plugins: {
+  }
+ })
+
+
 //************** vue-material */
 import {
     MdAvatar,
@@ -70,56 +118,7 @@ var en_labels = require('./assets/json/i18n/' +
     '.json')
 import VueI18n from 'vue-i18n'
 
-import './styles/quasar.styl'
-import '@quasar/extras/material-icons/material-icons.css'
-import {
-  Quasar, 
-  QLayout,
-  QBtnGroup,
-  QInput,
-  QUploaderAddTrigger,
-  QUploader,
-  QHeader,
-  QDrawer,
-  QPageContainer,
-  QPage,
-  QToolbar,
-  QToolbarTitle,
-  QBtn,
-  QIcon,
-  QList,
-  QItem,
-  QItemSection,
-  QItemLabel,
-} from 'quasar'
 
-Vue.use(Quasar, {
-  config: {},
-  components: {
-    QLayout,
-    QBtnGroup,
-    QUploaderAddTrigger,
-    QUploader,
-    QBtn,
-    QInput,
-    QHeader,
-    QDrawer,
-    QPageContainer,
-    QPage,
-    QToolbar,
-    QToolbarTitle,
-    QBtn,
-    QIcon,
-    QList,
-    QItem,
-    QItemSection,
-    QItemLabel,
-  },
-  directives: {
-  },
-  plugins: {
-  }
- })
 const i18n = new VueI18n({
     locale: process.env.VUE_APP_DEFAULT_LANGUAGE, // set locale
     messages: {

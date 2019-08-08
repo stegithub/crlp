@@ -1,6 +1,48 @@
 <template>
   <div class="page-container">
     <notifications></notifications>
+
+
+    <!-- <q-layout view="lhr LpR lFr">
+         <q-header reveal elevated class="bg-primary text-white">
+            <q-toolbar>
+                <q-btn dense flat round icon="menu" @click="left = !left" />
+
+                <q-toolbar-title>
+                    <q-avatar>
+                        <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+                    </q-avatar>
+                    Title
+                </q-toolbar-title>
+
+                <q-btn dense flat round icon="menu" @click="right = !right" />
+            </q-toolbar>
+        </q-header>
+
+        <q-drawer v-model="left" side="left" behavior="desktop" bordered>
+        </q-drawer>
+
+        <q-drawer v-model="right" side="right" bordered>
+        </q-drawer>
+
+        <q-page-container>
+        <router-view />
+        </q-page-container>
+
+        <q-footer reveal elevated class="bg-grey-8 text-white">
+        <q-toolbar>
+            <q-toolbar-title>
+            <q-avatar>
+                <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+            </q-avatar>
+            Title
+            </q-toolbar-title>
+        </q-toolbar>
+        </q-footer>
+
+    </q-layout> -->
+
+
     <md-app md-mode="reveal">
         <md-app-toolbar class="tbar md-primary">
             <div class="md-toolbar-row">
@@ -17,12 +59,6 @@
                             </md-select>
                         </md-field>
                     </div>
-                    <!-- <md-button class="md-icon-button">
-                        <md-icon>refresh</md-icon>
-                    </md-button>
-                    <md-button class="md-icon-button">
-                        <md-icon>more_vert</md-icon>
-                    </md-button> -->
                 </div>
             </div>
         </md-app-toolbar>
@@ -47,21 +83,6 @@
                     </md-button>
                     <span class="md-list-item-text">{{$t('message.chat')}}</span>
                 </md-list-item>
-
-                <!-- <md-list-item>
-                    <md-icon>send</md-icon>
-                    <span class="md-list-item-text">Sent Mail</span>
-                </md-list-item>
-
-                <md-list-item>
-                    <md-icon>delete</md-icon>
-                    <span class="md-list-item-text">Trash</span>
-                </md-list-item>
-
-                <md-list-item>
-                    <md-icon>error</md-icon>
-                    <span class="md-list-item-text">Spam</span>
-                </md-list-item> -->
             </md-list>
         </md-app-drawer>
         <md-app-content>
@@ -88,7 +109,9 @@ export default {
         artists: [],
         artist_id: '',
         artistRef: null,
-        user: null
+        user: null,
+        left: true,
+        right: true
     }),
     created() {
     },
@@ -103,7 +126,6 @@ export default {
         }
     },
 	components: {
-		
 	}
 }
 </script>

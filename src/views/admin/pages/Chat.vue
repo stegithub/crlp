@@ -3,12 +3,26 @@
         {{$t("message.artist")}}: {{ this.artist.name }}
         <hr>
         <md-content ref="messagesEl" class="md-scrollbar messages">
-            <message v-for="(message, index) in messages" :message="message" :key="index" @messageChanged="messageChanged($event)"/>
+            <!-- <message v-for="(message, index) in messages" :message="message" :key="index" @messageChanged="messageChanged($event)"/> -->
+
+            <q-chat-message
+                v-for="(message, index) in messages" 
+                :key="index"
+                :text="[message.text]"
+                :stamp="getStamp(message)"
+                :sent="isMine(message)"
+            ><!-- :name="`${message.sender.firstname} ${message.sender.lastname}`"-->
+                <template slot="avatar" slot-scope="props">
+                    <md-avatar class="md-avatar-icon md-small" :class="getAvatarClass(message)">{{getInitial(message)}}</md-avatar>
+                </template>
+            </q-chat-message>
+
         </md-content>
 
+            <hr>
         <md-card-actions>
             <md-field>
-                <md-textarea v-model="text" v-on:keypress.enter.prevent="addMessage()"></md-textarea>
+                <md-input v-model="text" v-on:keypress.enter.prevent="addMessage()"></md-input>
             </md-field>
             <div class="md-layout md-alignment-bottom-right">
                 <md-button @click="addMessage()" class="md-icon-button">
@@ -53,7 +67,33 @@ export default {
             this.$refs.messagesEl.$el.scrollTop = this.$refs.messagesEl.$el.scrollHeight            
         })
     },
+    computed: {
+        
+    },
     methods: {
+        getInitial(message) {
+            if(message.sender.firstname)
+                return message.sender.firstname.charAt(0) + message.sender.lastname.charAt(0)
+        },
+        getAvatarClass (message) {
+            if (message.sender.id === this.$current_user.uid) {
+                return 'md-primary'
+            } else {
+                return 'md-accent'
+            }
+        },
+        isMine(message) {
+            if (message.sender.id === this.$current_user.uid) {
+                return true
+            } else {
+                return false
+            }
+        },
+        getStamp(message) {
+            if(message && message.created)
+                return `${new Date(message.created.seconds * 1000).toLocaleDateString()} 
+                    ${new Date(message.created.seconds * 1000).toLocaleTimeString(window.navigator.language, {hour12: true, hour: '2-digit', minute:'2-digit'})}`
+        },
         addMessage() {
             if(this.text.length > 0) {
                 this.$route.params.artistRef.collection('messages').add({
@@ -86,7 +126,8 @@ export default {
         },
     },
     components: {
-        Message: () => import('../components/Message') //.then(({ MdCard }) => MdCard),
+        Message: () => import('../components/Message'), //.then(({ MdCard }) => MdCard),
+        QChatMessage: () => import('quasar/src/components/chat/QChatMessage')
     }
 }
 </script>
@@ -95,9 +136,22 @@ export default {
 .chat {
     // max-height: calc(100vh - 8vh);
     .messages {
-        height: 55vh;
+        height: 75vh;
         // max-height: calc(100vh - 34vh);
         overflow: auto;
+    }
+    .md-avatar {
+        margin: .6rem;
+    }
+    .md-avatar.md-small {
+        width: 30px;
+        min-width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        font-size: 14px;
+    }
+    .md-field {
+        margin: unset;
     }
 }
 </style>
